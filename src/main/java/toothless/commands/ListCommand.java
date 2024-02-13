@@ -14,7 +14,6 @@ public class ListCommand extends Command {
     /**
      * Executes the command to list all tasks in the task list. If the list is empty, it throws an exception
      * to inform the user that there are no tasks to display.
-     *
      * @param ui The user interface to interact with.
      * @param taskList The task list whose tasks are to be displayed.
      * @param storage The storage system, not directly used by this command.
@@ -22,14 +21,19 @@ public class ListCommand extends Command {
      * @throws ToothlessException If the task list is empty.
      */
     @Override
-    public boolean handle(Ui ui, TaskList taskList, Storage storage) throws ToothlessException {
+    public String handle(Ui ui, TaskList taskList, Storage storage) throws ToothlessException {
         if (taskList.size() == 0) {
             throw new ToothlessException("Human list is empty like my tummy right now :/");
         }
-        System.out.println("Here are the tasks in your list:");
-        for (int i = 0; i < taskList.size(); i++) {
-            ui.showTask(taskList.getTask(i), i);
-        }
+        return ui.showAllTasks(taskList);
+    }
+
+    /**
+     * Indicates whether the command is an exit command.
+     * @return False, as the command is not an exit command.
+     */
+    @Override
+    public boolean isExit() {
         return false;
     }
 }
